@@ -24,7 +24,6 @@
             </div>
         </div>
 
-        <!-- KARUZELA ZDJĘĆ Z ALPINE.JS -->
         @php
             $allImages = [];
             if($car->image_path) $allImages[] = $car->image_path;
@@ -34,13 +33,11 @@
         @if(count($allImages) > 0)
             <div x-data="{ activeSlide: 0, slides: @js($allImages) }" class="mb-8 bg-black rounded-xl overflow-hidden shadow-md border border-slate-200">
 
-                <!-- Główne okno slajdera -->
                 <div class="relative h-[300px] md:h-[600px] w-full flex items-center justify-center">
                     <template x-for="(slide, index) in slides" :key="index">
                         <img x-show="activeSlide === index" :src="'{{ asset('storage') }}/' + slide" class="absolute inset-0 w-full h-full object-contain transition-opacity duration-500" x-transition.opacity>
                     </template>
 
-                    <!-- Przyciski Nawigacyjne (Lewo/Prawo) ukryte jeśli jest tylko 1 zdjęcie -->
                     <div x-show="slides.length > 1" class="absolute inset-0 flex items-center justify-between p-4 pointer-events-none">
                         <button @click="activeSlide = activeSlide === 0 ? slides.length - 1 : activeSlide - 1" class="pointer-events-auto bg-black/60 text-white rounded-full w-12 h-12 flex items-center justify-center hover:bg-blue-600 transition shadow-lg backdrop-blur-sm focus:outline-none">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
@@ -51,7 +48,6 @@
                     </div>
                 </div>
 
-                <!-- Miniaturki pod spodem -->
                 <div x-show="slides.length > 1" class="flex overflow-x-auto gap-2 p-3 bg-slate-900 border-t border-slate-700 custom-scrollbar">
                     <template x-for="(slide, index) in slides" :key="index">
                         <button @click="activeSlide = index" class="flex-shrink-0 w-24 h-16 rounded overflow-hidden border-2 transition focus:outline-none" :class="activeSlide === index ? 'border-blue-500 opacity-100' : 'border-transparent opacity-50 hover:opacity-100'">
@@ -61,8 +57,6 @@
                 </div>
             </div>
         @endif
-        <!-- KONIEC KARUZELI -->
-
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
             <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
                 <h3 class="text-xl font-bold border-b border-slate-300 pb-2 mb-4 text-slate-800">Dane Techniczne</h3>
@@ -93,7 +87,6 @@
         </div>
     </div>
 
-    <!-- Moduł Lakieru -->
     <h3 class="text-2xl font-black mb-4 text-slate-800 flex items-center"><span class="bg-blue-600 text-white w-8 h-8 flex justify-center items-center rounded-full mr-3 text-sm">1</span> Raport z pomiaru powłoki lakierniczej</h3>
     @foreach($car->inspections as $inspection)
         <div class="bg-white rounded-xl shadow-md p-6 mb-10 border border-slate-200">
@@ -111,13 +104,57 @@
                     <span class="block text-sm font-semibold text-slate-600 mb-1">Dach</span>
                     <span class="font-black text-2xl {{ $inspection->paint_thickness_roof > 150 ? 'text-amber-600' : 'text-emerald-600' }}">{{ $inspection->paint_thickness_roof }} µm</span>
                 </div>
-                <div class="border rounded-lg p-4 {{ $inspection->paint_thickness_left_side > 150 ? 'bg-amber-50 border-amber-200' : 'bg-emerald-50 border-emerald-200' }}">
-                    <span class="block text-sm font-semibold text-slate-600 mb-1">Lewy bok</span>
-                    <span class="font-black text-2xl {{ $inspection->paint_thickness_left_side > 150 ? 'text-amber-600' : 'text-emerald-600' }}">{{ $inspection->paint_thickness_left_side }} µm</span>
+                <div class="border rounded-lg p-4 {{ $inspection->paint_thickness_front_bumper > 150 ? 'bg-amber-50 border-amber-200' : 'bg-emerald-50 border-emerald-200' }}">
+                    <span class="block text-sm font-semibold text-slate-600 mb-1">Zderzak Przedni</span>
+                    <span class="font-black text-2xl {{ $inspection->paint_thickness_front_bumper > 150 ? 'text-amber-600' : 'text-emerald-600' }}">{{ $inspection->paint_thickness_front_bumper }} µm</span>
                 </div>
-                <div class="border rounded-lg p-4 {{ $inspection->paint_thickness_right_side > 150 ? 'bg-amber-50 border-amber-200' : 'bg-emerald-50 border-emerald-200' }}">
-                    <span class="block text-sm font-semibold text-slate-600 mb-1">Prawy bok</span>
-                    <span class="font-black text-2xl {{ $inspection->paint_thickness_right_side > 150 ? 'text-amber-600' : 'text-emerald-600' }}">{{ $inspection->paint_thickness_right_side }} µm</span>
+                <div class="border rounded-lg p-4 {{ $inspection->paint_thickness_rear_bumper > 150 ? 'bg-amber-50 border-amber-200' : 'bg-emerald-50 border-emerald-200' }}">
+                    <span class="block text-sm font-semibold text-slate-600 mb-1">Zderzak Tylny</span>
+                    <span class="font-black text-2xl {{ $inspection->paint_thickness_rear_bumper > 150 ? 'text-amber-600' : 'text-emerald-600' }}">{{ $inspection->paint_thickness_rear_bumper }} µm</span>
+                </div>
+            </div>
+
+            <div class="border-t pt-4 mb-4">
+                <span class="text-slate-500 text-xs font-black uppercase mb-3 block">← Lewa strona pojazdu:</span>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                    <div class="border rounded-lg p-3 {{ $inspection->paint_thickness_front_left_fender > 150 ? 'bg-amber-50 border-amber-200' : 'bg-emerald-50 border-emerald-200' }}">
+                        <span class="block text-xs font-semibold text-slate-500 mb-1">Błotnik przedni</span>
+                        <span class="font-bold text-xl {{ $inspection->paint_thickness_front_left_fender > 150 ? 'text-amber-600' : 'text-emerald-600' }}">{{ $inspection->paint_thickness_front_left_fender }} µm</span>
+                    </div>
+                    <div class="border rounded-lg p-3 {{ $inspection->paint_thickness_front_left_door > 150 ? 'bg-amber-50 border-amber-200' : 'bg-emerald-50 border-emerald-200' }}">
+                        <span class="block text-xs font-semibold text-slate-500 mb-1">Drzwi przednie</span>
+                        <span class="font-bold text-xl {{ $inspection->paint_thickness_front_left_door > 150 ? 'text-amber-600' : 'text-emerald-600' }}">{{ $inspection->paint_thickness_front_left_door }} µm</span>
+                    </div>
+                    <div class="border rounded-lg p-3 {{ $inspection->paint_thickness_rear_left_door > 150 ? 'bg-amber-50 border-amber-200' : 'bg-emerald-50 border-emerald-200' }}">
+                        <span class="block text-xs font-semibold text-slate-500 mb-1">Drzwi tylne</span>
+                        <span class="font-bold text-xl {{ $inspection->paint_thickness_rear_left_door > 150 ? 'text-amber-600' : 'text-emerald-600' }}">{{ $inspection->paint_thickness_rear_left_door }} µm</span>
+                    </div>
+                    <div class="border rounded-lg p-3 {{ $inspection->paint_thickness_rear_left_fender > 150 ? 'bg-amber-50 border-amber-200' : 'bg-emerald-50 border-emerald-200' }}">
+                        <span class="block text-xs font-semibold text-slate-500 mb-1">Błotnik tylny</span>
+                        <span class="font-bold text-xl {{ $inspection->paint_thickness_rear_left_fender > 150 ? 'text-amber-600' : 'text-emerald-600' }}">{{ $inspection->paint_thickness_rear_left_fender }} µm</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t pt-4 mb-6">
+                <span class="text-slate-500 text-xs font-black uppercase mb-3 block">→ Prawa strona pojazdu:</span>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                    <div class="border rounded-lg p-3 {{ $inspection->paint_thickness_front_right_fender > 150 ? 'bg-amber-50 border-amber-200' : 'bg-emerald-50 border-emerald-200' }}">
+                        <span class="block text-xs font-semibold text-slate-500 mb-1">Błotnik przedni</span>
+                        <span class="font-bold text-xl {{ $inspection->paint_thickness_front_right_fender > 150 ? 'text-amber-600' : 'text-emerald-600' }}">{{ $inspection->paint_thickness_front_right_fender }} µm</span>
+                    </div>
+                    <div class="border rounded-lg p-3 {{ $inspection->paint_thickness_front_right_door > 150 ? 'bg-amber-50 border-amber-200' : 'bg-emerald-50 border-emerald-200' }}">
+                        <span class="block text-xs font-semibold text-slate-500 mb-1">Drzwi przednie</span>
+                        <span class="font-bold text-xl {{ $inspection->paint_thickness_front_right_door > 150 ? 'text-amber-600' : 'text-emerald-600' }}">{{ $inspection->paint_thickness_front_right_door }} µm</span>
+                    </div>
+                    <div class="border rounded-lg p-3 {{ $inspection->paint_thickness_rear_right_door > 150 ? 'bg-amber-50 border-amber-200' : 'bg-emerald-50 border-emerald-200' }}">
+                        <span class="block text-xs font-semibold text-slate-500 mb-1">Drzwi tylne</span>
+                        <span class="font-bold text-xl {{ $inspection->paint_thickness_rear_right_door > 150 ? 'text-amber-600' : 'text-emerald-600' }}">{{ $inspection->paint_thickness_rear_right_door }} µm</span>
+                    </div>
+                    <div class="border rounded-lg p-3 {{ $inspection->paint_thickness_rear_right_fender > 150 ? 'bg-amber-50 border-amber-200' : 'bg-emerald-50 border-emerald-200' }}">
+                        <span class="block text-xs font-semibold text-slate-500 mb-1">Błotnik tylny</span>
+                        <span class="font-bold text-xl {{ $inspection->paint_thickness_rear_right_fender > 150 ? 'text-amber-600' : 'text-emerald-600' }}">{{ $inspection->paint_thickness_rear_right_fender }} µm</span>
+                    </div>
                 </div>
             </div>
 
@@ -128,7 +165,6 @@
         </div>
     @endforeach
 
-    <!-- Moduł Napraw -->
     <h3 class="text-2xl font-black mb-4 text-slate-800 flex items-center"><span class="bg-blue-600 text-white w-8 h-8 flex justify-center items-center rounded-full mr-3 text-sm">2</span> Udokumentowane Naprawy i Użyte Części</h3>
     <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 mb-12">
         <div class="overflow-x-auto">
@@ -163,7 +199,6 @@
         </div>
     </div>
 
-    <!-- Formularz CRM -->
     <div class="bg-slate-900 text-white rounded-xl shadow-xl p-8 mb-12 border-b-8 border-blue-500">
         <h3 class="text-2xl font-black mb-2">Zainteresowany tym pojazdem?</h3>
         <p class="text-slate-400 mb-6">Wyślij zapytanie do doradcy komisu lub zarezerwuj termin na darmową jazdę próbną.</p>
