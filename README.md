@@ -1,59 +1,77 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🚗 UczciwyKomis PRO - System CRM i Zarządzania Flotą
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Kompleksowy system webowy stworzony dla małych i średnich komisów samochodowych. Aplikacja centralizuje procesy zarządzania ofertami pojazdów, historią serwisową, pomiarami powłoki lakierniczej oraz zgłoszeniami klientów z poziomu jednej, zintegrowanej platformy.
 
-## About Laravel
+![Screenshot z aplikacji - np. strona główna lub panel admina](link-do-zdjecia-lub-relatywna-sciezka)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🌟 Główne funkcjonalności
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 👤 Dla Klienta (Gość)
+* **Katalog Pojazdów:** Przejrzysta lista dostępnych aut z możliwością szybkiego podglądu zdjęć.
+* **Zaawansowane Filtrowanie:** Możliwość precyzyjnego wyszukiwania po marce, cenie, roczniku, pojemności silnika, przebiegu, rodzaju paliwa, skrzyni biegów i statusie "bezwypadkowy".
+* **Karta Pojazdu (Raport):** Dostęp do szczegółowych danych technicznych oraz wizualizacji grubości powłoki lakierniczej (z podziałem na każdy element karoserii) w mikronach.
+* **Formularz Kontaktowy:** Wbudowany formularz na karcie każdego pojazdu do szybkiego wysyłania zapytań o ofertę lub rezerwacji jazdy próbnej.
+* **Responsywność:** W pełni funkcjonalny interfejs na urządzeniach mobilnych.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 🛡️ Dla Administratora (Pracownik Komisu)
+* **Panel Zarządzania Flotą:** Pełny moduł CRUD (Dodawanie, Edycja, Usuwanie) ofert z rygorystyczną walidacją formularzy po stronie serwera (m.in. sprawdzanie długości numeru VIN).
+* **Zarządzanie Mediami:** Zoptymalizowany system wgrywania zdjęć głównych oraz dodatkowych galerii na serwer.
+* **Moduł Skrzynki CRM:** Centralne miejsce odbioru zapytań od klientów. System automatycznie wiąże wiadomość klienta z konkretnym pojazdem z bazy, umożliwiając łatwą zmianę statusu obsługi (Nowe -> W kontakcie -> Zamknięte).
+* **Raporty Lakiernicze i Naprawy:** Możliwość dodawania i ewidencjonowania pomiarów grubości lakieru oraz historii wymiany części eksploatacyjnych (z polityką niezmienności historycznej).
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## 🛠️ Architektura Bazy Danych
+Aplikacja opiera się na relacyjnej bazie danych SQLite z wykorzystaniem relacji `One-To-Many`. Główne encje to:
+* `cars` (Główna tabela pojazdów)
+* `inquiries` (Zgłoszenia CRM przypisane do aut - *Cascade Delete*)
+* `inspections` (Raporty powłoki lakierniczej)
+* `repairs` (Ewidencja wymienianych części)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## 💻 Technologie
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Projekt został zbudowany w oparciu o najnowsze standardy branżowe:
+* **Backend:** PHP 8.x, Laravel Framework
+* **Baza Danych:** SQLite 3 (z możliwością bezbolesnej migracji na PostgreSQL/MySQL)
+* **Frontend:** Blade Templating, Tailwind CSS 3, Alpine.js
+* **Zarządzanie pakietami:** Composer (PHP) & NPM (Node.js)
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## 🚀 Instrukcja Instalacji (Środowisko Lokalne)
 
-## Contributing
+### 1. Wymagania wstępne
+Do uruchomienia projektu potrzebujesz zainstalowanych:
+* PHP >= 8.2
+* Composer
+* Node.js & NPM
+* Git
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 2. Proces instalacji
 
-## Code of Conduct
+```bash
+# 1. Klonowanie repozytorium
+git clone [https://github.com/TwojLogin/uczciwy-komis-pro.git](https://github.com/TwojLogin/uczciwy-komis-pro.git)
+cd uczciwy-komis-pro
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# 2. Instalacja zależności backendowych (PHP)
+composer install
 
-## Security Vulnerabilities
+# 3. Instalacja zależności frontendowych (NPM)
+npm install
+npm run build
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# 4. Konfiguracja środowiska
+cp .env.example .env
+# W systemie Windows użyj: copy .env.example .env
 
-## License
+# 5. Generowanie klucza aplikacji
+php artisan key:generate
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# 6. Tworzenie struktury bazy danych i ładowanie danych testowych
+php artisan migrate:fresh --seed
+
+# 7. Tworzenie dowiązania (symlink) do przechowywania przesyłanych zdjęć
+php artisan storage:link
