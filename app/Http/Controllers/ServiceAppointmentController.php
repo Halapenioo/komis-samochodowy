@@ -28,11 +28,11 @@ class ServiceAppointmentController extends Controller
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        if ($appointment->user_id !== Auth::id() && $user->role !== 'admin') {
+        if ($appointment->user_id !== Auth::id() && $user->role !== 'admin_repairs') {
             abort(403);
         }
 
-        if ($user->role === 'admin') {
+        if ($user->role === 'admin_repairs') {
             $request->validate(['status' => 'required|string|in:nowe,w_naprawie,gotowe']);
             $appointment->update(['status' => $request->status]);
         }
@@ -45,7 +45,7 @@ class ServiceAppointmentController extends Controller
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        if ($appointment->user_id !== Auth::id() && $user->role !== 'admin') {
+        if ($appointment->user_id !== Auth::id() && $user->role !== 'admin_repairs') {
             abort(403);
         }
 
