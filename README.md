@@ -2,7 +2,8 @@
 
 Kompleksowy system webowy stworzony dla małych i średnich komisów samochodowych. Aplikacja centralizuje procesy zarządzania ofertami pojazdów, historią serwisową, pomiarami powłoki lakierniczej oraz zgłoszeniami klientów z poziomu jednej, zintegrowanej platformy.
 
-![Screenshot z aplikacji - np. strona główna lub panel admina](link-do-zdjecia-lub-relatywna-sciezka)
+<img width="1918" height="871" alt="image" src="https://github.com/user-attachments/assets/ff8be96f-6686-4ead-87fa-bcdc059966d5" />
+
 
 ## 🌟 Główne funkcjonalności
 
